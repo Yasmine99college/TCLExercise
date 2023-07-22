@@ -1,0 +1,7 @@
+proc reverse {inputString} {
+    set words [split $inputString " "]
+    
+    set reversedString [join [lreverse $words] " "]
+    
+    return $reversedString
+}
