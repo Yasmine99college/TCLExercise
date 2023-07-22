@@ -1,0 +1,30 @@
+proc partition {list low high} {
+    set pivot [lindex $list $high]
+    set i [expr {$low - 1}]
+    for {set j $low} {$j < $high} {incr j} {
+        if {[lindex $list $j] <= $pivot} {
+            incr i
+            set temp [lindex $list $i]
+            lset list $i [lindex $list $j]
+            lset list $j $temp
+        }
+    }
+    set temp [lindex $list [expr {$i + 1}]]
+    lset list [expr {$i + 1}] [lindex $list $high]
+    lset list $high $temp
+    return [expr {$i + 1}]
+}
+
+proc quickSort {list low high} {
+    if {$low < $high} {
+        set pivotIndex [partition $list $low $high]
+        quickSort $list $low [expr {$pivotIndex - 1}]
+        quickSort $list [expr {$pivotIndex + 1}] $high
+    }
+}
+
+proc sortList {L} {
+    set list [lassign $L nums]
+    quickSort nums 0 [expr {[llength $nums] - 1}]
+    return $nums
+}
